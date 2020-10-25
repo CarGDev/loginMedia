@@ -1,0 +1,27 @@
+language: node_js
+cache:
+  directories:
+  - node_modules
+  - "~/.npm"
+node_js:
+- '12'
+git:
+  depth: 3
+script:
+- yarn test
+notifications:
+  email:
+    reciepients:
+    - ingecarlos.gutierrez@gmail.com
+    - moquera012@gmail.com
+    on_success: always
+    on_failure: always
+deploy:
+  provide: heroku
+  skip-cleanup: true
+  keep-history: true
+  api_key:
+    secure: Zy60OSGGpNSS9vg18lkcJeD41da6TkrUsVZwRAwRdmWeQpj+sxLLZICKQ4POkU4LY5p+ryVRbymp3iTcGOF/gPw9igIgzMie8P4L/JIWyDMnrcmS6putQzSsFMbfUn3xuCGVE+f0FYg0red0az5sB82Q/geaYPppymC958QfcS+oSXZ8J8ZwoQbXPnF3ykn2xBXCupyF18S7RovJA3B31vOxQlWMCq61d5h6ZGaSwoYm7WXRH8bgRvxTYTNvMOxNnzo8XUh2brtU65GrhyOGdQiA1JRiP2DYANekf4P9Ct14kEQqLgQPL+UVK14vjRRp9arjOZaJqIvCiKSy6nwnt8qLgzGQf5jSkwvdTCDKe5tedfYxeIWjW1wVIALi1NmylmUghCIFME4RH+004QaAeKaxlNT++TomAbxL20HvjcxT16wVL2gYQWOkQpczxpfqFsVQXv6p1YSh6lNkT5zCLd5/PV6VDlYPMHwwJjKyan0BoTWP+Yt2pUKXnLubvZq32U6WXQ2dy8uA7T4ztgQMgJCCM2R6MOOLGwVGsBhBpjxF2cFwhOgdnwYy2uzFELNhZrpYMhWpbJfMQkZmGnh6jChnnrt4BnpYTGdqA4N5vVjOBnboqtXpr9dKtNbySWvPpykHcwU04MFk0p5gyR22Yz88UU+5iTr39GzpwvRczn4=
+  app: ssr-server
+  on:
+    repo: Blood-Stream/ssr-server
