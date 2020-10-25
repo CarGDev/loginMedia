@@ -1,6 +1,6 @@
 'use strict'
 
-const express = require("express");
+const express = require("express")
 const helmet = require('helmet')
 const passport = require('passport')
 const boom = require('@hapi/boom')
@@ -8,16 +8,16 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const axios = require('axios')
 
-const config = require("./config/config");
+const config = require("./config/config")
 
-const app = express();
+const app = express()
 
 // Agregamos las variables de timpo en segundos
-const THIRTY_DAYS_IN_SEC = 2592000;
-const TWO_HOURS_IN_SEC = 7200;
+const THIRTY_DAYS_IN_SEC = 2592000
+const TWO_HOURS_IN_SEC = 7200
 
 // body parser
-app.use(express.json());
+app.use(express.json())
 app.use(cookieParser())
 // app.use(session({ session: config.sessionSecret }))
 // app.use(passport.initialize())
@@ -25,6 +25,7 @@ app.use(cookieParser())
 // app.use(helmet())
 // Basic Strategy
 require('./utils/auth/strategies/basic')
+require('./utils/auth/strategies/oauth')
 
 const postSignIn = async (req, res, next) => {
   const { rememberMe } = req.body
@@ -63,9 +64,24 @@ const postSignUp = async (req, res, next) => {
   }
 }
 
+const googleOAuth = async (req, res, next) => {
+  if (!req.user) next(boom.unauthorized())
+
+  const { token, ...user } = req.user
+
+  res.cookie('token', token, {
+    httpOnly: !config.dev,
+    secure: !config.dev
+  })
+
+  res.status(200).json(user)
+}
+
 app.post("/auth/sign-in", postSignIn)
-app.post("/auth/sign-up", postSignUp);
+app.post("/auth/sign-up", postSignUp)
+app.get('/auth/google-oauth', passport.authenticate('google-oauth', { scope: ['email', 'profile', 'openid'] }))
+app.get('/auth/google-oaut/callback', passport.authenticate('google-oauth', { session: false }), googleOAuth)
 
 app.listen(config.port, function() {
-  console.log(`Listening http://localhost:${config.port}`);
-});
+  console.log(`Listening http://localhost:${config.port}`)
+})
