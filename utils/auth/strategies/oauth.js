@@ -35,7 +35,8 @@ const oAuth2Strategy = new OAuth2Strategy({
         apiKeyToken: config.apiKeyToken
       }
     })
-    if (!data || status !== 201) return cb(boom.unauthorized(), false)
+
+    if (!data || status !== 201 ) return cb(boom.unauthorized(), false)
 
     return cb(null, data)
   }

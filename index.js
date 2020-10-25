@@ -18,14 +18,16 @@ const TWO_HOURS_IN_SEC = 7200
 
 // body parser
 app.use(express.json())
-app.use(cookieParser())
-// app.use(session({ session: config.sessionSecret }))
-// app.use(passport.initialize())
-// app.use(passport.session())
+app.use(cookieParser(config.sessionSecret))
+app.use(session({ secret: config.sessionSecret }))
+app.use(passport.initialize())
+app.use(passport.session())
 // app.use(helmet())
+
 // Basic Strategy
 require('./utils/auth/strategies/basic')
 require('./utils/auth/strategies/oauth')
+require('./utils/auth/strategies/twitter')
 
 const postSignIn = async (req, res, next) => {
   const { rememberMe } = req.body
@@ -77,11 +79,27 @@ const googleOAuth = async (req, res, next) => {
   res.status(200).json(user)
 }
 
+const twitterOAuth = async (req, res, next) => {
+  if (!req.user) next(boom.unauthorized())
+
+  const { token, ...user } = req.user
+
+  res.cookie('token', token, {
+    httpOnly: !config.dev,
+    secure: !config.dev
+  })
+
+  res.status(200).json(user)
+}
+
 app.post("/auth/sign-in", postSignIn)
 app.post("/auth/sign-up", postSignUp)
 app.get('/auth/google-oauth', passport.authenticate('google-oauth', { scope: ['email', 'profile', 'openid'] }))
 app.get('/auth/google-oaut/callback', passport.authenticate('google-oauth', { session: false }), googleOAuth)
+app.get('/auth/twitter', passport.authenticate('twitter'))
+app.get('/home', passport.authenticate('twitter', { session: false }), twitterOAuth)
 
 app.listen(config.port, function() {
+  console.log(config.sessionSecret)
   console.log(`Listening http://localhost:${config.port}`)
 })
