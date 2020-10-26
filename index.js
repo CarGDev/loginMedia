@@ -28,6 +28,8 @@ app.use(passport.session())
 require('./utils/auth/strategies/basic')
 require('./utils/auth/strategies/oauth')
 require('./utils/auth/strategies/twitter')
+require('./utils/auth/strategies/github')
+require('./utils/auth/strategies/facebook')
 
 const postSignIn = async (req, res, next) => {
   const { rememberMe } = req.body
@@ -92,12 +94,42 @@ const twitterOAuth = async (req, res, next) => {
   res.status(200).json(user)
 }
 
+const githubAuth = async (req, res, next) => {
+  if (!req.user) next(boom.unauthorized())
+
+  const { token, ...user } = req.user
+
+  res.cookie('token', token, {
+    httpOnly: !config.dev,
+    secure: !config.dev
+  })
+
+  res.status(200).json(user)
+}
+
+const facebookAuth = async (req, res, next) => {
+  if (!req.user) next(boom.unauthorized())
+
+  const { token, ...user } = req.user
+
+  res.cookie('token', token, {
+    httpOnly: !config.dev,
+    secure: !config.dev
+  })
+
+  res.status(200).json(user)
+}
+
 app.post("/auth/sign-in", postSignIn)
 app.post("/auth/sign-up", postSignUp)
 app.get('/auth/google-oauth', passport.authenticate('google-oauth', { scope: ['email', 'profile', 'openid'] }))
 app.get('/auth/google-oaut/callback', passport.authenticate('google-oauth', { session: false }), googleOAuth)
 app.get('/auth/twitter', passport.authenticate('twitter'))
 app.get('/home', passport.authenticate('twitter', { session: false }), twitterOAuth)
+app.get('/auth/github', passport.authenticate('github'))
+app.get('/auth/github/callback', passport.authenticate('github', { session: false }), githubAuth)
+app.get('/auth/facebook', passport.authenticate('facebook'))
+app.get('/auth/facebook/callback', passport.authenticate('facebook', { session: false }), facebookAuth)
 
 app.listen(config.port, function() {
   console.log(config.sessionSecret)
