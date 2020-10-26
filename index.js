@@ -22,6 +22,12 @@ app.use(cookieParser(config.sessionSecret))
 app.use(session({ secret: config.sessionSecret }))
 app.use(passport.initialize())
 app.use(passport.session())
+app.use((req, res, next) => {
+  if ((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
+  res.redirect(307, 'https://' + req.get('Host') + req.url);
+  } else
+  next();
+});
 // app.use(helmet())
 
 // Basic Strategy
@@ -128,7 +134,7 @@ app.get('/auth/twitter', passport.authenticate('twitter'))
 app.get('/home', passport.authenticate('twitter', { session: false }), twitterOAuth)
 app.get('/auth/github', passport.authenticate('github'))
 app.get('/auth/github/callback', passport.authenticate('github', { session: false }), githubAuth)
-app.get('/auth/facebook', passport.authenticate('facebook'))
+app.get('/auth/facebook', passport.authenticate('facebook'), )
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { session: false }), facebookAuth)
 
 app.listen(config.port, function() {
