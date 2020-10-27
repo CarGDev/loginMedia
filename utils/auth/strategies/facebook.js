@@ -18,16 +18,12 @@ passport.use(
             method: "post",
             data: {
                 nickname: profile.displayName,
-                country: 'CO',
-                postal_code: '00000',
                 birthday: '1900/01/01',
                 status: true,
-                avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.',
                 platform: 'xbox',
                 email: profile.email,
                 phone: '0000000000',
                 rol: 'usuario',
-                level: '1',
                 password: profile.id,
                 apiKeyToken: config.apiKeyToken
             }

@@ -93,10 +93,6 @@ const twitterOAuth = async (req, res, next) => {
   if (!req.user) next(boom.unauthorized())
 
   const { token, ...user } = req.user.body
-  console.log(`==>>> ${token}`)
-  console.log(`==> ${req.user}`)
-  console.log(`==> ${req.user.body}`)
-  console.log(`==> ${req.user.body.token}`)
   res.cookie('token', token, {
     httpOnly: !config.dev,
     secure: !config.dev
@@ -109,10 +105,6 @@ const githubAuth = async (req, res, next) => {
   if (!req.user) next(boom.unauthorized())
 
   const { token, ...user } = req.user.body
-  console.log(`==>>> ${token}`)
-  console.log(`==> ${req.user}`)
-  console.log(`==> ${req.user.body}`)
-  console.log(`==> ${req.user.body.token}`)
   res.cookie('token', token, {
     httpOnly: !config.dev,
     secure: !config.dev
@@ -138,7 +130,7 @@ app.post("/auth/sign-in", postSignIn)
 app.post("/auth/sign-up", postSignUp)
 app.get('/auth/google-oauth', passport.authenticate('google-oauth', { scope: ['email', 'profile', 'openid'] }))
 app.get('/auth/google-oaut/callback', passport.authenticate('google-oauth', { session: false }), googleOAuth)
-app.get('/auth/twitter', passport.authenticate('twitter'))
+app.get('/auth/twitter', passport.authenticate('twitter', {scope:['include_email=true']}))
 app.get('/home', passport.authenticate('twitter', { session: false }), twitterOAuth)
 app.get('/auth/github', passport.authenticate('github'))
 app.get('/auth/github/callback', passport.authenticate('github', { session: false }), githubAuth)
