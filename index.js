@@ -93,10 +93,6 @@ const twitterOAuth = async (req, res, next) => {
   if (!req.user) next(boom.unauthorized())
 
   const { token, ...user } = req.user.body
-  console.log(`==>>> ${token}`)
-  console.log(`==> ${req.user}`)
-  console.log(`==> ${req.user.body}`)
-  console.log(`==> ${req.user.body.token}`)
   res.cookie('token', token, {
     httpOnly: !config.dev,
     secure: !config.dev
@@ -109,10 +105,6 @@ const githubAuth = async (req, res, next) => {
   if (!req.user) next(boom.unauthorized())
 
   const { token, ...user } = req.user.body
-  console.log(`==>>> ${token}`)
-  console.log(`==> ${req.user}`)
-  console.log(`==> ${req.user.body}`)
-  console.log(`==> ${req.user.body.token}`)
   res.cookie('token', token, {
     httpOnly: !config.dev,
     secure: !config.dev
