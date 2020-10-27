@@ -24,13 +24,15 @@ app.use(cookieParser(config.sessionSecret))
 app.use(session({ secret: config.sessionSecret }))
 app.use(passport.initialize())
 app.use(passport.session())
-app.use((req, res, next) => {
-  if ((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
-  res.redirect(307, 'https://' + req.get('Host') + req.url);
-  } else
-  next();
-});
-// app.use(helmet())
+if (config.dev === 'production') {
+  app.use((req, res, next) => {
+    if ((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
+    res.redirect(307, 'https://' + req.get('Host') + req.url);
+    } else
+    next();
+  });
+}
+app.use(helmet())
 
 // Basic Strategy
 require('./utils/auth/strategies/basic')
@@ -46,8 +48,7 @@ const postSignIn = async (req, res, next) => {
       if (error || !data) next(boom.unauthorized())
       req.login(data, { session: false }, async (error) => {
         if (error) next(error)
-        const { token, ...user } = data
-
+        const { token, ...user } = data.body
         res.cookie('token', token, {
           httpOnly: !config.dev,
           secure: !config.dev,
@@ -79,8 +80,7 @@ const postSignUp = async (req, res, next) => {
 const googleOAuth = async (req, res, next) => {
   if (!req.user) next(boom.unauthorized())
 
-  const { token, ...user } = req.user
-
+  const { token, ...user } = req.user.body
   res.cookie('token', token, {
     httpOnly: !config.dev,
     secure: !config.dev
@@ -92,7 +92,7 @@ const googleOAuth = async (req, res, next) => {
 const twitterOAuth = async (req, res, next) => {
   if (!req.user) next(boom.unauthorized())
 
-  const { token, ...user } = req.user
+  const { token, ...user } = req.user.body
 
   res.cookie('token', token, {
     httpOnly: !config.dev,
@@ -105,7 +105,7 @@ const twitterOAuth = async (req, res, next) => {
 const githubAuth = async (req, res, next) => {
   if (!req.user) next(boom.unauthorized())
 
-  const { token, ...user } = req.user
+  const { token, ...user } = req.user.body
 
   res.cookie('token', token, {
     httpOnly: !config.dev,
@@ -118,7 +118,7 @@ const githubAuth = async (req, res, next) => {
 const facebookAuth = async (req, res, next) => {
   if (!req.user) next(boom.unauthorized())
 
-  const { token, ...user } = req.user
+  const { token, ...user } = req.user.body
 
   res.cookie('token', token, {
     httpOnly: !config.dev,
@@ -140,6 +140,5 @@ app.get('/auth/facebook', passport.authenticate('facebook'))
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { session: false }), facebookAuth)
 
 app.listen(config.port, function() {
-  console.log(config.sessionSecret)
   console.log(`Listening http://localhost:${config.port}`)
 })
