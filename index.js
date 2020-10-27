@@ -86,7 +86,12 @@ const googleOAuth = async (req, res, next) => {
     secure: !config.dev
   })
 
-  res.status(200).json(user)
+  res.status(200).send({
+    error: false,
+    //counter: req.session.count,
+    status: 200,
+    body: user
+  }) //json(user)
 }
 
 const twitterOAuth = async (req, res, next) => {
