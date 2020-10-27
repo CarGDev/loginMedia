@@ -7,6 +7,7 @@ const boom = require('@hapi/boom')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const axios = require('axios')
+const cors = require('cors')
 
 const config = require("./config/config")
 
@@ -17,6 +18,7 @@ const THIRTY_DAYS_IN_SEC = 2592000
 const TWO_HOURS_IN_SEC = 7200
 
 // body parser
+app.use(cors())
 app.use(express.json())
 app.use(cookieParser(config.sessionSecret))
 app.use(session({ secret: config.sessionSecret }))
