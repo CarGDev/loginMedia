@@ -79,51 +79,107 @@ const postSignUp = async (req, res, next) => {
 
 const googleOAuth = async (req, res, next) => {
   if (!req.user) next(boom.unauthorized())
-
-  const { token, ...user } = req.user.body
+  
+  const token = req.user.body.token
+  const username = req.user.body.Nickname
+  const email = req.user.body.contactId.email
+  const id = req.user.body.id
   res.cookie('token', token, {
     httpOnly: !config.dev,
     secure: !config.dev
   })
-
-  res.status(200).json(user)
+  res.cookie('user', username, {
+    httpOnly: !config.dev,
+    secure: !config.dev
+  })
+  res.cookie('email', email, {
+    httpOnly: !config.dev,
+    secure: !config.dev
+  })
+  res.cookie('id', id, {
+    httpOnly: !config.dev,
+    secure: !config.dev
+  })
+  res.redirect(`${config.apiUrlBack}/`)
+  //res.status(200).json(user)
 }
 
 const twitterOAuth = async (req, res, next) => {
   if (!req.user) next(boom.unauthorized())
 
-  const { token, ...user } = req.user.body
+  const token = req.user.body.token
+  const username = req.user.body.Nickname
+  const email = req.user.body.contactId.email
+  const id = req.user.body.id
   res.cookie('token', token, {
     httpOnly: !config.dev,
     secure: !config.dev
   })
-
-  res.status(200).json(user)
+  res.cookie('user', username, {
+    httpOnly: !config.dev,
+    secure: !config.dev
+  })
+  res.cookie('email', email, {
+    httpOnly: !config.dev,
+    secure: !config.dev
+  })
+  res.cookie('id', id, {
+    httpOnly: !config.dev,
+    secure: !config.dev
+  })
+  res.redirect(`${config.apiUrlBack}/`)
 }
 
 const githubAuth = async (req, res, next) => {
   if (!req.user) next(boom.unauthorized())
 
-  const { token, ...user } = req.user.body
+  const token = req.user.body.token
+  const username = req.user.body.Nickname
+  const email = req.user.body.contactId.email
+  const id = req.user.body.id
   res.cookie('token', token, {
     httpOnly: !config.dev,
     secure: !config.dev
   })
-
-  res.status(200).json(user)
+  res.cookie('user', username, {
+    httpOnly: !config.dev,
+    secure: !config.dev
+  })
+  res.cookie('email', email, {
+    httpOnly: !config.dev,
+    secure: !config.dev
+  })
+  res.cookie('id', id, {
+    httpOnly: !config.dev,
+    secure: !config.dev
+  })
+  res.redirect(`${config.apiUrlBack}/`)
 }
 
 const facebookAuth = async (req, res, next) => {
   if (!req.user) next(boom.unauthorized())
 
-  const { token, ...user } = req.user.body
-
+  const token = req.user.body.token
+  const username = req.user.body.Nickname
+  const email = req.user.body.contactId.email
+  const id = req.user.body.id
   res.cookie('token', token, {
     httpOnly: !config.dev,
     secure: !config.dev
   })
-
-  res.status(200).json(user)
+  res.cookie('user', username, {
+    httpOnly: !config.dev,
+    secure: !config.dev
+  })
+  res.cookie('email', email, {
+    httpOnly: !config.dev,
+    secure: !config.dev
+  })
+  res.cookie('id', id, {
+    httpOnly: !config.dev,
+    secure: !config.dev
+  })
+  res.redirect(`${config.apiUrlBack}/`)
 }
 
 app.post("/auth/sign-in", postSignIn)
