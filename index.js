@@ -131,7 +131,7 @@ const twitterOAuth = async (req, res, next) => {
     httpOnly: !config.dev,
     secure: !config.dev
   })*/
-  res.status(200).JSON(token)
+  res.status(200).json('Good')
 //  res.redirect(`${config.apiUrlBack}/`)
 }
 
