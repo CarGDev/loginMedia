@@ -84,7 +84,11 @@ const googleOAuth = async (req, res, next) => {
   const username = req.user.body.Nickname
   const email = req.user.body.contactId.email
   const id = req.user.body.id
-  res.cookie('token', token, {
+  res.cookie('token', token)
+  res.cookie('email', email)
+  res.cookie('user', username)
+  res.cookie('id', id)
+  /*res.cookie('token', token, {
     httpOnly: !config.dev,
     secure: !config.dev
   })
@@ -99,7 +103,7 @@ const googleOAuth = async (req, res, next) => {
   res.cookie('id', id, {
     httpOnly: !config.dev,
     secure: !config.dev
-  })
+  })*/
   res.redirect(`${config.apiUrlBack}/`)
   //res.status(200).json(user)
 }
@@ -111,11 +115,11 @@ const twitterOAuth = async (req, res, next) => {
   const username = req.user.body.Nickname
   const email = req.user.body.contactId.email
   const id = req.user.body.id
-  /*res.cookie('token', token)
+  res.cookie('token', token)
   res.cookie('email', email)
   res.cookie('user', username)
-  res.cookie('id', id)*/
-  res.cookie('token', token, {
+  res.cookie('id', id)
+  /*res.cookie('token', token, {
     httpOnly: !config.dev,
     secure: !config.dev
   })
@@ -130,7 +134,7 @@ const twitterOAuth = async (req, res, next) => {
   res.cookie('id', id, {
     httpOnly: !config.dev,
     secure: !config.dev
-  })
+  })*/
   res.status(200).json('Good')
 //  res.redirect(`${config.apiUrlBack}/`)
 }
@@ -142,7 +146,11 @@ const githubAuth = async (req, res, next) => {
   const username = req.user.body.Nickname
   const email = req.user.body.contactId.email
   const id = req.user.body.id
-  res.cookie('token', token, {
+  res.cookie('token', token)
+  res.cookie('email', email)
+  res.cookie('user', username)
+  res.cookie('id', id)
+  /*res.cookie('token', token, {
     httpOnly: !config.dev,
     secure: !config.dev
   })
@@ -157,7 +165,7 @@ const githubAuth = async (req, res, next) => {
   res.cookie('id', id, {
     httpOnly: !config.dev,
     secure: !config.dev
-  })
+  })*/
   res.redirect(`${config.apiUrlBack}/`)
 }
 
@@ -168,7 +176,11 @@ const facebookAuth = async (req, res, next) => {
   const username = req.user.body.Nickname
   const email = req.user.body.contactId.email
   const id = req.user.body.id
-  res.cookie('token', token, {
+  res.cookie('token', token)
+  res.cookie('email', email)
+  res.cookie('user', username)
+  res.cookie('id', id)
+  /*res.cookie('token', token, {
     httpOnly: !config.dev,
     secure: !config.dev
   })
@@ -183,7 +195,7 @@ const facebookAuth = async (req, res, next) => {
   res.cookie('id', id, {
     httpOnly: !config.dev,
     secure: !config.dev
-  })
+  })*/
   res.redirect(`${config.apiUrlBack}/`)
 }
 
