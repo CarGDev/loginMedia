@@ -95,7 +95,7 @@ const googleOAuth = async (req, res, next) => {
   res.cookie('email', email, { domain: `${config.apiUrlBack}/`, path: '/administrator', secure: true })
   res.cookie('user', username, { domain: `${config.apiUrlBack}/`, path: '/administrator', secure: true })
   res.cookie('id', id, { domain: `${config.apiUrlBack}/`, path: '/administrator', secure: true })
-
+  res.setHeader('Set-Cookie','visited=true; Max-Age=3000; HttpOnly, Secure')
   res.redirect(`${config.apiUrlBack}/`)
   /*res.cookie('token', token, {
     httpOnly: !config.dev,
