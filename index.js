@@ -91,7 +91,7 @@ const googleOAuth = async (req, res, next) => {
   const email = req.user.body.contactId.email
   const id = req.user.body.id
 
-  res.cookie('token', token, { domain: `${config.apiUrlBack}/`, path: '/administrator', secure: true }})
+  res.cookie('token', token, { domain: `${config.apiUrlBack}/`, path: '/administrator', secure: true })
   res.cookie('email', email, { domain: `${config.apiUrlBack}/`, path: '/administrator', secure: true })
   res.cookie('user', username, { domain: `${config.apiUrlBack}/`, path: '/administrator', secure: true })
   res.cookie('id', id, { domain: `${config.apiUrlBack}/`, path: '/administrator', secure: true })
