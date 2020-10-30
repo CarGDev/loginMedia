@@ -104,6 +104,7 @@ const googleOAuth = async (req, res, next) => {
     httpOnly: !config.dev,
     secure: !config.dev
   })*/
+  console.log(config.apiUrlBack)
   res.redirect(`${config.apiUrlBack}/`)
   //res.status(200).json(user)
 }
