@@ -18,7 +18,13 @@ const THIRTY_DAYS_IN_SEC = 2592000
 const TWO_HOURS_IN_SEC = 7200
 
 // body parser
-app.use(cors())
+const corsOptions = {
+  origin: '*',
+  credentials: true
+}
+
+app.use(cors(corsOptions))
+
 app.use(express.json())
 app.use(cookieParser(config.sessionSecret))
 app.use(session({ secret: config.sessionSecret }))
@@ -107,7 +113,6 @@ const googleOAuth = async (req, res, next) => {
     httpOnly: !config.dev,
     secure: !config.dev
   })*/
-  console.log(config.apiUrlBack)
   //res.status(200).json(user)
 }
 
