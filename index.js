@@ -84,6 +84,8 @@ const googleOAuth = async (req, res, next) => {
   const username = req.user.body.Nickname
   const email = req.user.body.contactId.email
   const id = req.user.body.id
+
+  res.redirect(`${config.apiUrlBack}/`)
   res.cookie('token', token)
   res.cookie('email', email)
   res.cookie('user', username)
@@ -105,7 +107,6 @@ const googleOAuth = async (req, res, next) => {
     secure: !config.dev
   })*/
   console.log(config.apiUrlBack)
-  res.redirect(`${config.apiUrlBack}/`)
   //res.status(200).json(user)
 }
 
@@ -116,6 +117,8 @@ const twitterOAuth = async (req, res, next) => {
   const username = req.user.body.Nickname
   const email = req.user.body.contactId.email
   const id = req.user.body.id
+
+  res.redirect(`${config.apiUrlBack}/`)
   res.cookie('token', token)
   res.cookie('email', email)
   res.cookie('user', username)
@@ -136,7 +139,6 @@ const twitterOAuth = async (req, res, next) => {
     httpOnly: !config.dev,
     secure: !config.dev
   })*/
-  res.status(200).json('Good')
 //  res.redirect(`${config.apiUrlBack}/`)
 }
 
@@ -147,6 +149,8 @@ const githubAuth = async (req, res, next) => {
   const username = req.user.body.Nickname
   const email = req.user.body.contactId.email
   const id = req.user.body.id
+
+  res.redirect(`${config.apiUrlBack}/`)
   res.cookie('token', token)
   res.cookie('email', email)
   res.cookie('user', username)
@@ -167,7 +171,6 @@ const githubAuth = async (req, res, next) => {
     httpOnly: !config.dev,
     secure: !config.dev
   })*/
-  res.redirect(`${config.apiUrlBack}/`)
 }
 
 const facebookAuth = async (req, res, next) => {
@@ -178,6 +181,8 @@ const facebookAuth = async (req, res, next) => {
   const email = req.user.body.contactId.email
   const id = req.user.body.id
   res.cookie('token', token)
+
+  res.redirect(`${config.apiUrlBack}/`)
   res.cookie('email', email)
   res.cookie('user', username)
   res.cookie('id', id)
@@ -197,7 +202,6 @@ const facebookAuth = async (req, res, next) => {
     httpOnly: !config.dev,
     secure: !config.dev
   })*/
-  res.redirect(`${config.apiUrlBack}/`)
 }
 
 app.post("/auth/sign-in", postSignIn)
