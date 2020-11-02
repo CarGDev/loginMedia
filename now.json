@@ -1,0 +1,27 @@
+{
+  "name": "ssr-server",
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "API_KEY_TOKEN": "@apikeytoken",
+    "API_URL": "@apiurl",
+    "API_URL_BACKEND": "@apiurlbackend",
+    "AUTH_JWT_SECRET": "@authjwtsecret",
+    "FACEBOOK_APP_ID": "@facebookappid",
+    "FACEBOOK_APP_SECRET": "@facebookappsecret",
+    "GITHUB_CLIENT_ID": "@githubclientid",
+    "GITHUB_CLIENT_SECRET": "@githubclientsecret",
+    "GOOGLE_CLIENT_ID": "@googleclientid",
+    "GOOGLE_CLIENT_SECRET": "@googleclientsecret",
+    "SECRET": "@secret",
+    "SESSION_SECRET": "@sessionsecret",
+    "TWITTER_CONSUMER_KEY": "@twitterconsumerkey",
+    "TWITTER_CONSUMER_SECRET": "@twitterconsumersecret"
+  }
+}
