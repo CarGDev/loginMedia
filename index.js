@@ -18,18 +18,21 @@ const THIRTY_DAYS_IN_SEC = 2592000
 const TWO_HOURS_IN_SEC = 7200
 
 // body parser
-const corsOptions = {
+/*const corsOptions = {
   origin: '*',
   credentials: true
 }
 
-app.use(cors(corsOptions))
+app.use(cors(corsOptions))*/
+app.use(cors())
 
 app.use(express.json())
 app.use(cookieParser(config.sessionSecret))
 app.use(session({ secret: config.sessionSecret }))
 app.use(passport.initialize())
 app.use(passport.session())
+console.log(config.dev)
+console.log(config.dev === 'production')
 if (config.dev === 'production') {
   app.use((req, res, next) => {
     if ((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {

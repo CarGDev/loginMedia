@@ -11,4 +11,7 @@ services:
         https: 443
     env_vars:
       NODE_ENV: production
+      API_URL: https://dry-mesa-48732.herokuapp.com
+      API_URL_BACKEND: http://blood-stream.xyz/#/
+
 
