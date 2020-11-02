@@ -213,6 +213,9 @@ const facebookAuth = async (req, res, next) => {
   })*/
 }
 
+const mainPage = async (req, res, next) => {
+  res.send('Working')
+}
 app.post("/auth/sign-in", postSignIn)
 app.post("/auth/sign-up", postSignUp)
 app.get('/auth/google-oauth', passport.authenticate('google-oauth', { scope: ['email', 'profile', 'openid'] }))
@@ -223,7 +226,7 @@ app.get('/auth/github', passport.authenticate('github'))
 app.get('/auth/github/callback', passport.authenticate('github', { session: false }), githubAuth)
 app.get('/auth/facebook', passport.authenticate('facebook'))
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { session: false }), facebookAuth)
-
+app.get('/', mainPage)
 app.listen(config.port, function() {
   console.log(`Listening http://localhost:${config.port}`)
 })
