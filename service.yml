@@ -1,0 +1,14 @@
+services:
+
+  inventory:
+    git_url: git@github.com:Blood-Stream/ssr-server.git
+    git_branch: main
+    command: npm start
+    build_root: .
+    ports:
+      - container: 8080
+        http: 80
+        https: 443
+    env_vars:
+      NODE_ENV: production
+
