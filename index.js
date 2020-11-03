@@ -8,6 +8,7 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const axios = require('axios')
 const cors = require('cors')
+const cookieSession = require('cookie-session')
 
 const config = require("./config/config")
 
@@ -18,13 +19,18 @@ const THIRTY_DAYS_IN_SEC = 2592000
 const TWO_HOURS_IN_SEC = 7200
 
 // body parser
-/*const corsOptions = {
+const corsOptions = {
   origin: '*',
   credentials: true
 }
 
-app.use(cors(corsOptions))*/
-app.use(cors())
+const cookies = {
+  domain: process.env.apiUrlBack,
+  httpOnly: !config.dev,
+  secure: !config.dev
+}
+
+app.use(cors(corsOptions))  
 
 app.use(express.json())
 app.use(cookieParser(config.sessionSecret))
@@ -94,28 +100,12 @@ const googleOAuth = async (req, res, next) => {
   const email = req.user.body.contactId.email
   const id = req.user.body.id
 
-  res.cookie('token', token)
-  res.cookie('email', email)
-  res.cookie('user', username)
-  res.cookie('id', id)
+  res.cookie('token', token, { ...cookies })
+  res.cookie('email', email, { ...cookies })
+  res.cookie('user', username, { ...cookies })
+  res.cookie('id', id, { ...cookies })
   res.redirect(`${config.apiUrlBack}/`)
-  /*res.cookie('token', token, {
-    httpOnly: !config.dev,
-    secure: !config.dev
-  })
-  res.cookie('user', username, {
-    httpOnly: !config.dev,
-    secure: !config.dev
-  })
-  res.cookie('email', email, {
-    httpOnly: !config.dev,
-    secure: !config.dev
-  })
-  res.cookie('id', id, {
-    httpOnly: !config.dev,
-    secure: !config.dev
-  })*/
-  //res.status(200).json(user)
+  
 }
 
 const twitterOAuth = async (req, res, next) => {
@@ -126,29 +116,12 @@ const twitterOAuth = async (req, res, next) => {
   const email = req.user.body.contactId.email
   const id = req.user.body.id
 
-  res.cookie('token', token)
-  res.cookie('email', email)
-  res.cookie('user', username)
-  res.cookie('id', id)
+  res.cookie('token', token, { ...cookies })
+  res.cookie('email', email, { ...cookies })
+  res.cookie('user', username, { ...cookies })
+  res.cookie('id', id, { ...cookies })
 
   res.redirect(`${config.apiUrlBack}/`)
-  /*res.cookie('token', token, {
-    httpOnly: !config.dev,
-    secure: !config.dev
-  })
-  res.cookie('user', username, {
-    httpOnly: !config.dev,
-    secure: !config.dev
-  })
-  res.cookie('email', email, {
-    httpOnly: !config.dev,
-    secure: !config.dev
-  })
-  res.cookie('id', id, {
-    httpOnly: !config.dev,
-    secure: !config.dev
-  })*/
-//  res.redirect(`${config.apiUrlBack}/`)
 }
 
 const githubAuth = async (req, res, next) => {
@@ -159,28 +132,12 @@ const githubAuth = async (req, res, next) => {
   const email = req.user.body.contactId.email
   const id = req.user.body.id
 
-  res.cookie('token', token)
-  res.cookie('email', email)
-  res.cookie('user', username)
-  res.cookie('id', id)
+  res.cookie('token', token, { ...cookies })
+  res.cookie('email', email, { ...cookies })
+  res.cookie('user', username, { ...cookies })
+  res.cookie('id', id, { ...cookies })
 
   res.redirect(`${config.apiUrlBack}/`)
-  /*res.cookie('token', token, {
-    httpOnly: !config.dev,
-    secure: !config.dev
-  })
-  res.cookie('user', username, {
-    httpOnly: !config.dev,
-    secure: !config.dev
-  })
-  res.cookie('email', email, {
-    httpOnly: !config.dev,
-    secure: !config.dev
-  })
-  res.cookie('id', id, {
-    httpOnly: !config.dev,
-    secure: !config.dev
-  })*/
 }
 
 const facebookAuth = async (req, res, next) => {
@@ -191,28 +148,12 @@ const facebookAuth = async (req, res, next) => {
   const email = req.user.body.contactId.email
   const id = req.user.body.id
 
-  res.cookie('token', token)
-  res.cookie('email', email)
-  res.cookie('user', username)
-  res.cookie('id', id)
+  res.cookie('token', token, { ...cookies })
+  res.cookie('email', email, { ...cookies })
+  res.cookie('user', username, { ...cookies })
+  res.cookie('id', id, { ...cookies })
 
   res.redirect(`${config.apiUrlBack}/`)
-  /*res.cookie('token', token, {
-    httpOnly: !config.dev,
-    secure: !config.dev
-  })
-  res.cookie('user', username, {
-    httpOnly: !config.dev,
-    secure: !config.dev
-  })
-  res.cookie('email', email, {
-    httpOnly: !config.dev,
-    secure: !config.dev
-  })
-  res.cookie('id', id, {
-    httpOnly: !config.dev,
-    secure: !config.dev
-  })*/
 }
 
 const mainPage = async (req, res, next) => {
