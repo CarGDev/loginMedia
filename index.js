@@ -8,7 +8,7 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const axios = require('axios')
 const cors = require('cors')
-const cookieSession = require('cookie-session')
+const querystring = require('querystring')
 
 const config = require("./config/config")
 
@@ -31,7 +31,7 @@ app.use(cookieParser(config.sessionSecret))
 app.use(session({ secret: config.sessionSecret }))
 app.use(passport.initialize())
 app.use(passport.session())
-
+app.enable('trust proxy')
 
 if (config.dev === 'production') {
   app.use((req, res, next) => {
@@ -98,8 +98,15 @@ const googleOAuth = async (req, res, next) => {
   res.cookie('email', email)
   res.cookie('user', username)
   res.cookie('id', id)
-  res.redirect(`${config.apiUrlBack}/`)
-  
+  const query = querystring.stringify({
+    "user": username,
+    "id": id,
+    "token": token,
+    "email": email,
+    "valid": true
+  })
+  res.redirect('/?' + query)
+  //res.redirect(`${config.apiUrlBack}/${username}&&${id}&&${email}&&${token}`)
 }
 
 const twitterOAuth = async (req, res, next) => {
@@ -114,8 +121,15 @@ const twitterOAuth = async (req, res, next) => {
   res.cookie('email', email)
   res.cookie('user', username)
   res.cookie('id', id)
-
-  res.redirect(`${config.apiUrlBack}/`)
+  const query = querystring.stringify({
+    "user": username,
+    "id": id,
+    "token": token,
+    "email": email,
+    "valid": true
+  })
+  res.redirect('/?' + query)
+  //res.redirect(`${config.apiUrlBack}/`)
 }
 
 const githubAuth = async (req, res, next) => {
@@ -130,8 +144,15 @@ const githubAuth = async (req, res, next) => {
   res.cookie('email', email)
   res.cookie('user', username)
   res.cookie('id', id)
-
-  res.redirect(`${config.apiUrlBack}/`)
+  const query = querystring.stringify({
+    "user": username,
+    "id": id,
+    "token": token,
+    "email": email,
+    "valid": true
+  })
+  res.redirect('/?' + query)
+  //res.redirect(`${config.apiUrlBack}/`)
 }
 
 const facebookAuth = async (req, res, next) => {
@@ -146,8 +167,15 @@ const facebookAuth = async (req, res, next) => {
   res.cookie('email', email)
   res.cookie('user', username)
   res.cookie('id', id)
-
-  res.redirect(`${config.apiUrlBack}/`)
+  const query = querystring.stringify({
+    "user": username,
+    "id": id,
+    "token": token,
+    "email": email,
+    "valid": true
+  })
+  res.redirect('/?' + query)
+  //res.redirect(`${config.apiUrlBack}/`)
 }
 
 const mainPage = async (req, res, next) => {
