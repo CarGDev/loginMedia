@@ -98,14 +98,25 @@ const googleOAuth = async (req, res, next) => {
   res.cookie('email', email)
   res.cookie('user', username)
   res.cookie('id', id)
-  const query = querystring.stringify({
-    "user": username,
-    "id": id,
-    "token": token,
-    "email": email,
-    "valid": true
+  // const query = querystring.stringify({
+  //   "user": username,
+  //   "id": id,
+  //   "token": token,
+  //   "email": email,
+  //   "valid": true
+  // })
+  // res.redirect('/?' + query)
+  res.status(200).send({
+    error: false,
+    status: 200,
+    body: {
+      'user': username,
+      'id': id,
+      'token': token,
+      'email': email,
+      'valid': true
+    }
   })
-  res.redirect('/?' + query)
   //res.redirect(`${config.apiUrlBack}/${username}&&${id}&&${email}&&${token}`)
 }
 
