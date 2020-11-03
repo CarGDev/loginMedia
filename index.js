@@ -24,12 +24,6 @@ const corsOptions = {
   credentials: true
 }
 
-const cookies = {
-  domain: process.env.apiUrlBack,
-  httpOnly: !config.dev,
-  secure: !config.dev
-}
-
 app.use(cors(corsOptions))  
 
 app.use(express.json())
@@ -37,8 +31,8 @@ app.use(cookieParser(config.sessionSecret))
 app.use(session({ secret: config.sessionSecret }))
 app.use(passport.initialize())
 app.use(passport.session())
-console.log(config.dev)
-console.log(config.dev === 'production')
+
+
 if (config.dev === 'production') {
   app.use((req, res, next) => {
     if ((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
@@ -100,10 +94,10 @@ const googleOAuth = async (req, res, next) => {
   const email = req.user.body.contactId.email
   const id = req.user.body.id
 
-  res.cookie('token', token, { ...cookies })
-  res.cookie('email', email, { ...cookies })
-  res.cookie('user', username, { ...cookies })
-  res.cookie('id', id, { ...cookies })
+  res.cookie('token', token)
+  res.cookie('email', email)
+  res.cookie('user', username)
+  res.cookie('id', id)
   res.redirect(`${config.apiUrlBack}/`)
   
 }
@@ -116,10 +110,10 @@ const twitterOAuth = async (req, res, next) => {
   const email = req.user.body.contactId.email
   const id = req.user.body.id
 
-  res.cookie('token', token, { ...cookies })
-  res.cookie('email', email, { ...cookies })
-  res.cookie('user', username, { ...cookies })
-  res.cookie('id', id, { ...cookies })
+  res.cookie('token', token, { domain: 'http://blood-stream.xyz/#/', path: '/' })
+  res.cookie('email', email)
+  res.cookie('user', username)
+  res.cookie('id', id)
 
   res.redirect(`${config.apiUrlBack}/`)
 }
@@ -132,10 +126,10 @@ const githubAuth = async (req, res, next) => {
   const email = req.user.body.contactId.email
   const id = req.user.body.id
 
-  res.cookie('token', token, { ...cookies })
-  res.cookie('email', email, { ...cookies })
-  res.cookie('user', username, { ...cookies })
-  res.cookie('id', id, { ...cookies })
+  res.cookie('token', token)
+  res.cookie('email', email)
+  res.cookie('user', username)
+  res.cookie('id', id)
 
   res.redirect(`${config.apiUrlBack}/`)
 }
@@ -148,10 +142,10 @@ const facebookAuth = async (req, res, next) => {
   const email = req.user.body.contactId.email
   const id = req.user.body.id
 
-  res.cookie('token', token, { ...cookies })
-  res.cookie('email', email, { ...cookies })
-  res.cookie('user', username, { ...cookies })
-  res.cookie('id', id, { ...cookies })
+  res.cookie('token', token)
+  res.cookie('email', email)
+  res.cookie('user', username)
+  res.cookie('id', id)
 
   res.redirect(`${config.apiUrlBack}/`)
 }
