@@ -59,12 +59,12 @@ const postSignIn = async (req, res, next) => {
         if (error) next(error)
         let user = data.body.user
         user.token = data.body.token
-        /*const { token, ...user } = data.body
-        res.cookie('token', token, {
+        /*const { token, ...user } = data.body */
+        res.cookie('token', user.token, {
           httpOnly: !config.dev,
           secure: !config.dev,
           maxAge: rememberMe ? THIRTY_DAYS_IN_SEC : TWO_HOURS_IN_SEC
-        })*/
+        })
 
 
         res.status(200).json(user)
