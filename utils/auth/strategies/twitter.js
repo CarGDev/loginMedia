@@ -15,17 +15,14 @@ passport.use(
     includeEmail: true
   }, async (token, tokenSecret, profile, cb) => {
     const { data, status } = await axios({
-      url: `${config.apiUrl}/user/`,
+      url: `${config.apiUrl}/user/social-media`,
       method: 'post',
       data: {
-        nickname: profile.displayName,
-        birthday: '1900/01/01',
-        status: true,
-        platform: 'xbox',
+        name: profile.username,
         email: get(profile, 'emails.0.value', `${profile.username}@twitter.com`),
-        phone: '0000000000',
-        rol: 'usuario',
-        password: profile.id,
+        pictures: 'http://dummyimage.com/248x122.jpg/5fa2dd/ffffff',
+        type_user_id: 1,
+        password: `${profile.id}1wAasasfS!`,
         apiKeyToken: config.apiKeyToken
       }
     })
