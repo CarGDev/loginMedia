@@ -30,7 +30,6 @@ const oAuth2Strategy = new OAuth2Strategy({
     })
 
     if (!data || status !== 201 ) return cb(boom.unauthorized(), false)
-    console.log('data', data)
     return cb(null, data)
   }
 )
