@@ -49,20 +49,24 @@ require('./utils/auth/strategies/twitter')
 
 const googleOAuth = async (req, res, next) => {
   if (!req.user) next(boom.unauthorized())
-  res.status(200).send({
+  res.cookie('token', req.user.access_token)
+  res.redirect('http://localhost:8001/registro')
+  /* res.status(200).send({
     error: false,
     status: 200,
     body: req.user
-  })
+  }) */
 }
 
 const twitterOAuth = async (req, res, next) => {
   if (!req.user) next(boom.unauthorized())
-  res.status(200).send({
+  res.cookie('token', req.user.access_token)
+  res.redirect('http://localhost:8001/registro')
+  /* res.status(200).send({
     error: false,
     status: 200,
     body: req.user
-  })
+  }) */
 }
 
 
@@ -75,6 +79,7 @@ app.get('/auth/google-oauth/callback', passport.authenticate('google-oauth', { s
 app.get('/auth/twitter', passport.authenticate('twitter', {scope:['include_email=true']}))
 app.get('/home', passport.authenticate('twitter', { session: false }), twitterOAuth)
 app.get('/', mainPage)
+
 app.listen(config.port, function() {
   console.log(`Listening http://localhost:${config.port}`)
 })
